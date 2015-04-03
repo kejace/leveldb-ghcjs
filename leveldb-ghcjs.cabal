@@ -25,6 +25,8 @@ executable example
                   , leveldb-ghcjs
                   , text
                   , bytestring
+                  , transformers
+
 
   ghc-options:      -Wall -O -rtsopts
   ghc-prof-options: -prof -auto-all
@@ -32,12 +34,19 @@ executable example
   hs-source-dirs:   examples
 
 library
-  exposed-modules:  Database.LevelDBJS
-                  , Database.LevelDBJS.Core 
+  exposed-modules:  Database.LevelDB
+                  , Database.LevelDB.Base 
+                  , Database.LevelDB.MonadResource
+                  , Database.LevelDB.Types
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >=4.7 && <4.8
                      , ghcjs-base
+                     , data-default
+                     , bytestring
+                     , transformers
+                     , resourcet
+
   hs-source-dirs:      src
   default-language:    Haskell2010
 
