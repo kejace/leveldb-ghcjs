@@ -7,6 +7,11 @@ module Database.LevelDB.MonadResource
     , ReadOptions(..)
     , WriteOptions(..)
 
+    -- * Defaults
+    , defaultOptions
+    , defaultWriteOptions
+    , defaultReadOptions
+
     , open
     , put
     , get
@@ -21,15 +26,15 @@ import           Database.LevelDB.Base        (  DB
                                                , Options, ReadOptions, WriteOptions
                                                , defaultOptions, defaultReadOptions, defaultWriteOptions)
 
-import Database.LevelDB.Base as Base
+import qualified Database.LevelDB.Base as Base
 
 --open :: FilePath -> Options -> DB
 open :: MonadResource m => FilePath -> Options -> m DB
-open p o = return $ Base.baseOpen p o
+open p o = Base.open p o
 
 put :: MonadResource m => DB -> WriteOptions -> ByteString -> ByteString -> m ()
-put db wo key val = return () --Base.basePut
+put db wo key val = return () --Base.put
 
 -- | Read a value by key
 get :: MonadResource m => DB -> ReadOptions -> ByteString -> m (Maybe ByteString)
-get db ro key = return $ Base.baseGet db ro key
+get db ro key = Base.get db ro key

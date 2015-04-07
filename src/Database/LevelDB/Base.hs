@@ -13,9 +13,9 @@ module Database.LevelDB.Base
     , defaultWriteOptions
 
     -- * Basic Database Manipulations
-    , baseOpen
-    , basePut
-    , baseGet
+    , open
+    , put
+    , get
     )
 
 where
@@ -26,17 +26,25 @@ import           Data.ByteString.Char8 as BC
 import           Data.Default
 import           Control.Monad.IO.Class   (MonadIO (liftIO))
 
+import GHCJS.Foreign
+import GHCJS.Types
+import GHCJS.Marshal
+
 --instance MonadIO IO where
 --    liftIO = IO    
 
---open :: MonadIO m => FilePath -> Options -> m DB
-baseOpen :: FilePath -> Options -> DB
-baseOpen p o = DB o
+open :: MonadIO m => FilePath -> Options -> m DB
+--open :: FilePath -> Options -> DB
+open p o = return $ DB o
 
---put :: MonadIO m => DB -> WriteOptions -> ByteString -> ByteString -> m ()
-basePut :: DB -> WriteOptions -> ByteString -> ByteString -> ()
-basePut db wo key val =  ()
+put :: MonadIO m => DB -> WriteOptions -> ByteString -> ByteString -> m ()
+--put :: DB -> WriteOptions -> ByteString -> ByteString -> ()
+put db wo key val = return ()
+--put db wo key val = put' (toJSString . key) (toJSString. val)
 
---get :: MonadIO m => DB -> ReadOptions -> ByteString -> m (Maybe ByteString)
-baseGet :: DB -> ReadOptions -> ByteString -> (Maybe ByteString)
-baseGet db ro k = Just $ BC.pack "value"
+--foreign import javascript unsafe "var levelup = require('levelup'), db = levelup('/does/not/matter', { db: require('memdown') }); db.put('name', 'Yuri Irsenovich Kim'); $r=''; db.get('name' , function (err, value) { $r += 'hw'; });  $r+='helllllo';"  --  db.readStream().on('data', console.log); $r = 'hello';
+--  put' :: JSString -> JSString -> (IO JSString)
+
+get :: MonadIO m => DB -> ReadOptions -> ByteString -> m (Maybe ByteString)
+--get :: DB -> ReadOptions -> ByteString -> (Maybe ByteString)
+get db ro k = return $ Just $ BC.pack "value"

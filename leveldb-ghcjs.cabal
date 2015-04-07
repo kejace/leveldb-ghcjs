@@ -23,7 +23,7 @@ executable example
   build-depends:    base >= 3 && < 5
                   , ghcjs-base
                   , leveldb-ghcjs
-                  , text
+                  , text >= 1.1 && <= 1.3
                   , bytestring
                   , transformers
 
