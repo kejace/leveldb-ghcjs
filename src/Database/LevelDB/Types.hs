@@ -20,12 +20,21 @@ import           Data.ByteString.Char8 as BC
 import           Data.Default
 import           Control.Monad.IO.Class   (MonadIO (liftIO))
 
+
+import GHCJS.Foreign
+import GHCJS.Types
+import GHCJS.Marshal
+
+
+--newtype LevelDBJS a = (IO (JSRef a))
+
 --data DB = DB LevelDBPtr Options (IORef Bool) -- Options'
-data DB = DB Options
+data DB = DB (JSRef ()) Options
 
 --newtype Snapshot = Snapshot SnapshotPtr deriving (Eq)
 
 data Compression = NoCompression
+
 
 newtype Comparator = Comparator (ByteString -> ByteString -> Ordering)
 
